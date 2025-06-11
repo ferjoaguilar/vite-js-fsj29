@@ -1,64 +1,61 @@
+import Swal from 'sweetalert2'
 import './style.css'
-const app = document.getElementById('app')
 
-const heading = document.createElement('h1')
-heading.textContent = 'Hola desde mi projecto de VITE'
-heading.style.color = 'blue'
-app.appendChild(heading)
+document.querySelector('#app').innerHTML = `
+  <div class="container">
+    <h1>Formulario de contacto</h1>
 
-const paragraph = document.createElement('p')
-paragraph.textContent = 'Contenido del parrafo'
-app.appendChild(paragraph)
+    <form id="contact-form" class="contact-form">
 
-const image = document.createElement('img')
-image.src = 'Link de la imagen'
-image.alt = 'Este es una imagen'
-app.appendChild(image)
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name">
+      </div>
 
-let names = ['Franklin', 'Juan Diego', 'Lesly', 'Luis', 'Dinora']
-const randomName = names[Math.floor(Math.random() * names.length)];
-const messageContent = `
-  <div class="message">1
-    <h2>Mensaje de bienvenida</h2>
-    <p>Este es un mensaje de bienvenida a tu proyecto VITE. ${randomName}</p>
-  </div>
-`;
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email">
+      </div>
 
-const messageContainer = document.createElement('div')
-messageContainer.innerHTML = messageContent;
-app.appendChild(messageContainer)
+      <div class="form-group">
+        <label for="message">Mensaje:</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
 
-const htmlContentCounter = `
-  <div>
-    <h2 class="counter-title">Counter</h2>
-    <p id="counter-value">4</p>
-    <button id="increment-button">Incrementar</button>
-    <button id="decrement-button">Decrementar</button>
+      <button type="submit" class="submit-button">Enviar</button>
+
+    </form>
+
+    <div class="event-message" id="form-message">
+      Complete el formulario y haga clic en "Enviar".
+    </div>
   </div>
 `
-const counterDiv = document.createElement('div')
-counterDiv.innerHTML = htmlContentCounter;
-app.appendChild(counterDiv)
 
-const counterValue = document.getElementById('counter-value')
-const incrementButton = document.getElementById('increment-button')
-const decrementButton = document.getElementById('decrement-button')
+const form = document.getElementById('contact-form');
+const formMessage = document.getElementById('form-message');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  console.log('Formulario enviado');
+
+  const name = document.getElementById('name').value
+  const email = document.getElementById('email').value
+  const message = document.getElementById('message').value
+
+  if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
+
+    Swal.fire({
+      title: 'Error en el formulario',
+      text: 'Por favor, complete todos los campos.',
+      icon: 'error',
+      confirmButtonText: 'Volver a intentar'
+    })
+
+    return;
+  }
+
+  form.reset();
 
 
-// Inicializar el contador
-let counter = 4;
-
-incrementButton.addEventListener('click',() => {
-  //console.log('Hola soy un boton')
-  counter++
-  counterValue.textContent = counter;
-  console.log(`El contador ha sido incrementado a: ${counter}`)
 })
-
-decrementButton.addEventListener('mouseover', () => {
-  counter = 0;
-  counterValue.textContent = counter;
-  console.log('Counter reset to 0');
-});
-
-
