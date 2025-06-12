@@ -16,7 +16,7 @@ document.querySelector('#app').innerHTML = `
     <div class="theme-switch-wrapper">
       <span class="theme-icon">☀️</span>
       <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox">
+        <input type="checkbox" id="checkbox" ${initialTheme === 'dark'? 'checked': ''}>
         <div class="slider round"></div>
       </label>
       <span class="theme-icon">🌑</span>
@@ -37,5 +37,19 @@ document.querySelector('#app').innerHTML = `
       </div>
     </div>
   </div>
-
 `
+
+
+const switchTheme = (event) => {
+  if (event.target.checked){
+    document.documentElement.setAttribute('data-theme', 'dark')
+    localStorage.setItem('theme', 'dark')
+  }else{
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+const toggleSwitch = document.querySelector('#checkbox')
+toggleSwitch.addEventListener('change', switchTheme)
+
